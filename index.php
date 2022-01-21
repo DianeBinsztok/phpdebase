@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
-
+<?php
+include "header.php";
+?>
     <!--Corps de page-->
     <main>
         <!--Ligne 1 : Compétences + Expériences-->
@@ -130,7 +132,9 @@
 
 
     </main>
-
+<?php
+include "footer.php";
+?>
 
 </body>
 
