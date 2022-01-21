@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+
 <?php
 include "header.php";
 ?>
@@ -136,6 +136,3 @@ include "header.php";
 include "footer.php";
 ?>
 
-</body>
-
-</html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+
 
 <!--les infos de tête-->
 <?php
@@ -78,7 +78,3 @@ include "header.php";
 <?php
 include "footer.php";
 ?>
-
-</body>
-
-</html>

@@ -1,4 +1,4 @@
-
+<html lang="fr">
 <!--les infos de tête-->
 
 <head>
@@ -62,9 +62,9 @@
 
     <!--bandeau de navigation-->
     <nav>
-        <a href="index.php">Mon profil</a>
-        <a href="./hobbies.html">Autres activités</a>
-        <a href="./contact.html">Contact</a>
+        <a href="./index.php">Mon profil</a>
+        <a href="hobbies.php">Autres activités</a>
+        <a href="./contact.php">Contact</a>
 
     </nav>
 </header>
