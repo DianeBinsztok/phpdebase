@@ -6,7 +6,7 @@
 
 $metaTitle= "Diane Binsztok - Mes hobbies";
 $metaDescription = "Voici une description succinte de mes hobbies";
-include "header.php";
+require "header.php";
 ?>
 <!--Corps de page-->
 <main>

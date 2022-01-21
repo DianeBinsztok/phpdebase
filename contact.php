@@ -6,7 +6,7 @@
 
 $metaTitle="Diane Binsztok - Contact";
 $metaDescription = "Contactez-moi";
-include "header.php";
+require "header.php";
 ?>
 <!--Corps de page-->
 <main>

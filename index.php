@@ -4,7 +4,7 @@
 
 $metaTitle="Diane Binsztok - Mon CV";
 $metaDescription = "Bienvenue sur la page d'accueil de mon CV";
-include "header.php";
+require "header.php";
 
 ?>
     <!--Corps de page-->
