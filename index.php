@@ -1,7 +1,11 @@
-<!DOCTYPE html>
+
 
 <?php
+
+$metaTitle="Diane Binsztok - Mon CV";
+$metaDescription = "Bienvenue sur la page d'accueil de mon CV";
 include "header.php";
+
 ?>
     <!--Corps de page-->
     <main>

@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html lang="fr">
 <!--les infos de tête-->
 
@@ -6,8 +8,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $metaTitle="Mon CV"; ?></title>
-    <meta name="description" content="<?=  $metaDescription="Consultez mon CV et contactez-moi"; ?>"/>
+    <title><?= $metaTitle ?></title>
+    <meta name="description" content=<?=  $metaDescription ?>/>
     <link rel="stylesheet" media="screen and (max-width : 800px)" href="./css/phonestyle.css">
     <link rel="stylesheet" media="screen and (min-width : 800px)" href="./css/style.css">
 

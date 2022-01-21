@@ -1,8 +1,11 @@
-<!DOCTYPE html>
+
 
 
 <!--les infos de tête-->
 <?php
+
+$metaTitle="Diane Binsztok - Contact";
+$metaDescription = "Contactez-moi";
 include "header.php";
 ?>
 <!--Corps de page-->

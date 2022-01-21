@@ -1,8 +1,11 @@
-<!DOCTYPE html>
+
 
 
 <!--les infos de tête-->
 <?php
+
+$metaTitle= "Diane Binsztok - Mes hobbies";
+$metaDescription = "Voici une description succinte de mes hobbies";
 include "header.php";
 ?>
 <!--Corps de page-->
