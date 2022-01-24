@@ -3,17 +3,18 @@ $metaTitle="Diane Binsztok - Mon CV";
 $metaDescription = "Bienvenue sur la page d'accueil de mon CV";
 require "header.php";
 
-if($_GET["page"]==null){
-    include "accueil.php";
-
-}elseif($_GET["page"]=="contact"){
+if(isset($_GET["page"])){
+if($_GET["page"]=="contact"){
     include "contact.php";
 }elseif($_GET["page"]=="hobbies"){
     include "hobbies.php";
 }else{
-    include "error.php";
+        include "error.php";
+    }
+}else{
+    include "accueil.php";
 }
 
-require "footer.php";
 
+require "footer.php";
 ?>
