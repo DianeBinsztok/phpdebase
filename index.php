@@ -1,4 +1,9 @@
 <?php
+$metaTitle="Diane Binsztok - Mon CV";
+$metaDescription = "Bienvenue sur la page d'accueil de mon CV";
+require "header.php";
+
+
 
 
 if($_GET["page"]=="accueil"){
@@ -11,5 +16,7 @@ if($_GET["page"]=="accueil"){
 include "error.php";
 }
 
+
+require "footer.php";
 
 ?>

@@ -1,8 +1,6 @@
 <?php
 $metaTitle="Diane Binsztok - Mon CV";
 $metaDescription = "Bienvenue sur la page d'accueil de mon CV";
-require "header.php";
-
 ?>
 
 
@@ -135,7 +133,5 @@ require "header.php";
 
 
 </main>
-<?php
-include "footer.php";
-?>
+
 
