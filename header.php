@@ -67,9 +67,9 @@
 
 
     <nav>
-        <a href="./index.php?page=accueil">Mon profil</a>
-        <a href="./index.php?page=hobbies">Autres activités</a>
-        <a href="./index.php?page=contact">Contact</a>
+        <a href="/index.php">Mon profil</a>
+        <a href="/index.php?page=hobbies">Autres activités</a>
+        <a href="/index.php?page=contact">Contact</a>
 
     </nav>
 </header>
