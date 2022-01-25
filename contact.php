@@ -16,9 +16,9 @@ $metaDescription = "Contactez-moi";
             <label for="civilite">Choisissez votre civilité:</label>
             <select id="civilite" type="select" name="civilite">
                 <option value="civilite_titre">Civilité</option>
-                <option value="madame">Madame</option>
-                <option value="monsieur">Monsieur</option>
-                <option value="autre">Autre</option>
+                <option value="Madame">Madame</option>
+                <option value="Monsieur">Monsieur</option>
+                <option value="Autre">Autre</option>
             </select>
         </div>
 
@@ -43,15 +43,15 @@ $metaDescription = "Contactez-moi";
                 <div id="objet" id="radio_form_options">
                     <div class="option">
                         <label for="job">Proposition d'emploi</label> <input id="job" type="radio" name="objet"
-                                                                            value="job_value">
+                                                                            value="job">
                     </div>
                     <div class="option">
                         <label for="info">Demande d'information et prestations</label> <input id="info" type="radio" name="objet"
-                                                                            value="info_value">
+                                                                            value="info">
                     </div>
                     <div class="option">
                         <label for="other">Autre</label> <input id="other" type="radio" name="objet"
-                                                                     value="other_value">
+                                                                     value="autre">
                     </div>
                 </div>
             </div>
@@ -86,6 +86,7 @@ int $flags = 0,
 ): int|false;
 */
 
+$date=date("Y-m-d H:i:s");
 
 $civilite=filter_input(INPUT_POST, 'civilite', FILTER_DEFAULT);
 $nom=filter_input(INPUT_POST, 'nom', FILTER_DEFAULT);
@@ -95,7 +96,7 @@ $objet=filter_input(INPUT_POST, 'objet', FILTER_DEFAULT);
 $message=filter_input(INPUT_POST, 'message', FILTER_DEFAULT);
 
 file_put_contents(
-"contact_Y-m-d-H-i-s.txt",
+"contact_posts/contact_$date.txt",
 $civilite.$nom.$prenom.$email.$objet.$message
 );
 
