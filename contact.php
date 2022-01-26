@@ -71,7 +71,7 @@ if($submit!==null){
 
         <div class="form_field">
             <label for="nom">Votre nom:</label>
-            <input id="nom" type="text" name="nom"><br>
+            <input value="<?= $nom ?>" id="nom" type="text" name="nom"><br>
             <?php if(empty($nom)){?>
                 <div class='error_msg'><?= $field_msg ?></div>
             <?php } ?>
@@ -79,7 +79,7 @@ if($submit!==null){
 
         <div class="form_field">
             <label for="prenom">Votre prénom:</label>
-            <input id="prenom" type="text" name="prenom">
+            <input value="<?= $prenom ?>" id="prenom" type="text" name="prenom">
             <?php if(empty($prenom)){?>
                 <div class='error_msg'><?= $field_msg ?></div>
             <?php } ?>
@@ -87,7 +87,7 @@ if($submit!==null){
 
         <div class="form_field">
             <label for="email">Votre email:</label>
-            <input id="email" type="email" placeholder="ex: jean@gmail.com" name="email">
+            <input value="<?= $email ?>" id="email" type="email" placeholder="ex: jean@gmail.com" name="email">
             <?php if(empty($email)){?>
                 <div class='error_msg'><?= $field_msg ?></div>
             <?php } ?>
@@ -120,7 +120,7 @@ if($submit!==null){
 
         <div id="message" class="form_field">
             <label for="message">Votre message:</label>
-            <textarea form="form_container" name="message"></textarea>
+            <textarea value="<?= $message ?>"  form="form_container" name="message"></textarea>
             <?php if(empty($message)){?>
                 <div class='error_msg'><?= $field_msg ?></div>
             <?php } ?>
