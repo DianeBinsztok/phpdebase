@@ -9,15 +9,12 @@ $date=date("Y-m-d H:i:s");
 
 // 1 - Messages d'en-tête:
 $head_msg="";
-$global_error_msg="/!\ Tous les champs sont nécessaires pour l'envoi du formulaire.";
-$succes_msg="Merci pour votre prise de contact. Vous recevrez une réponse par email dans les plus brefs délais.";
 
 // 2 - Message sous chaque champs:
 $field_msg="";
-$field_error_msg="/!\ Ce champs est obligatoire pour l'envoi du formulaire";
 
 // Variable qui vérifie l'envoi du formulaire:
-$submit=filter_input(INPUT_POST, 'form_submit', FILTER_DEFAULT);;
+$submit=filter_input(INPUT_POST, 'form_submit', FILTER_DEFAULT);
 
 // Champs à remplir
 $civilite=filter_input(INPUT_POST, 'civilite', FILTER_DEFAULT);
@@ -28,19 +25,22 @@ $objet=filter_input(INPUT_POST, 'objet', FILTER_DEFAULT);
 $message=filter_input(INPUT_POST, 'message', FILTER_DEFAULT);
 
 
+
 if($submit!==null){
     if(isset($civilite,$nom,$prenom,$email,$objet,$message)){
         if(!empty($civilite)&&!empty($nom)&&!empty($prenom)&&!empty($email)&&!empty($objet)&&!empty($message)){
+
             file_put_contents(
                 "contact_posts/contact_$date.txt",
                 $civilite.$nom.$prenom.$email.$objet.$message
             );
-            $head_msg=$succes_msg;
+            $head_msg="Merci pour votre prise de contact. Vous recevrez une réponse par email dans les plus brefs délais.";
         }else{
-            $field_msg=$field_error_msg;
+            $field_msg="/!\ Ce champs est obligatoire pour l'envoi du formulaire";
         }
     }else{
-        $head_msg=$global_error_msg;
+        $head_msg="/!\ Tous les champs sont nécessaires pour l'envoi du formulaire.";
+        $field_msg="/!\ Ce champs est obligatoire pour l'envoi du formulaire";
     }
 }
 
@@ -50,13 +50,12 @@ if($submit!==null){
 <main>
 
     <h2 class="titles_font">Me contacter</h2>
-
     <form id="form_container" action="index.php?page=contact" method="post">
         <div class='error_msg'><?= $head_msg ?></div>
         <div class="form_field">
             <label for="civilite">Choisissez votre civilité:</label>
             <select id="civilite" type="select" name="civilite">
-                <option>Civilité</option>
+                <option value="">Civilité</option>
                 <option value="Madame">Madame</option>
                 <option value="Monsieur">Monsieur</option>
                 <option value="Autre">Autre</option>
@@ -120,7 +119,7 @@ if($submit!==null){
 
         <div id="message" class="form_field">
             <label for="message">Votre message:</label>
-            <textarea value="<?= $message ?>"  form="form_container" name="message"></textarea>
+            <textarea   form="form_container" name="message"><?= $message ?></textarea>
             <?php if(empty($message)){?>
                 <div class='error_msg'><?= $field_msg ?></div>
             <?php } ?>
