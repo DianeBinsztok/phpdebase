@@ -24,17 +24,22 @@ $email=filter_input(INPUT_POST, 'email', FILTER_DEFAULT);
 $objet=filter_input(INPUT_POST, 'objet', FILTER_DEFAULT);
 $message=filter_input(INPUT_POST, 'message', FILTER_DEFAULT);
 
-
+$valid_email=filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
 
 if($submit!==null){
     if(isset($civilite,$nom,$prenom,$email,$objet,$message)){
         if(!empty($civilite)&&!empty($nom)&&!empty($prenom)&&!empty($email)&&!empty($objet)&&!empty($message)){
+            if($valid_email){
+                file_put_contents(
+                    "contact_posts/contact_$date.txt",
+                     $civilite.$nom.$prenom.$email.$objet.$message
+                  );
+                $head_msg="Merci pour votre prise de contact. Vous recevrez une réponse par email dans les plus brefs délais.";
+            }else{
+                $email=false;
+                $field_msg="Veuillez entrer un format valide d'email. Ex: nom@boite.com";
+            }
 
-            file_put_contents(
-                "contact_posts/contact_$date.txt",
-                $civilite.$nom.$prenom.$email.$objet.$message
-            );
-            $head_msg="Merci pour votre prise de contact. Vous recevrez une réponse par email dans les plus brefs délais.";
         }else{
             $field_msg="/!\ Ce champs est obligatoire pour l'envoi du formulaire";
         }
