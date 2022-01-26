@@ -3,38 +3,94 @@
 
 $metaTitle="Diane Binsztok - Contact";
 $metaDescription = "Contactez-moi";
+$date=date("Y-m-d H:i:s");
+
+// Messages:
+
+// 1 - Messages d'en-tête:
+$head_msg="";
+$global_error_msg="/!\ Tous les champs sont nécessaires pour l'envoi du formulaire.";
+$succes_msg="Merci pour votre prise de contact. Vous recevrez une réponse par email dans les plus brefs délais.";
+
+// 2 - Message sous chaque champs:
+$field_msg="";
+$field_error_msg="/!\ Ce champs est obligatoire pour l'envoi du formulaire";
+
+// Variable qui vérifie l'envoi du formulaire:
+$submit=filter_input(INPUT_POST, 'form_submit', FILTER_DEFAULT);;
+
+// Champs à remplir
+$civilite=filter_input(INPUT_POST, 'civilite', FILTER_DEFAULT);
+$nom=filter_input(INPUT_POST, 'nom', FILTER_DEFAULT);
+$prenom=filter_input(INPUT_POST, 'prenom', FILTER_DEFAULT);
+$email=filter_input(INPUT_POST, 'email', FILTER_DEFAULT);
+$objet=filter_input(INPUT_POST, 'objet', FILTER_DEFAULT);
+$message=filter_input(INPUT_POST, 'message', FILTER_DEFAULT);
+
+
+if($submit!==null){
+    if(isset($civilite,$nom,$prenom,$email,$objet,$message)){
+        if(!empty($civilite)&&!empty($nom)&&!empty($prenom)&&!empty($email)&&!empty($objet)&&!empty($message)){
+            file_put_contents(
+                "contact_posts/contact_$date.txt",
+                $civilite.$nom.$prenom.$email.$objet.$message
+            );
+            $head_msg=$succes_msg;
+        }else{
+            $field_msg=$field_error_msg;
+        }
+    }else{
+        $head_msg=$global_error_msg;
+    }
+}
 
 ?>
+
 <!--Corps de page-->
 <main>
 
     <h2 class="titles_font">Me contacter</h2>
 
     <form id="form_container" action="index.php?page=contact" method="post">
-
+        <div class='error_msg'><?= $head_msg ?></div>
         <div class="form_field">
             <label for="civilite">Choisissez votre civilité:</label>
             <select id="civilite" type="select" name="civilite">
-                <option value="civilite_titre">Civilité</option>
+                <option>Civilité</option>
                 <option value="Madame">Madame</option>
                 <option value="Monsieur">Monsieur</option>
                 <option value="Autre">Autre</option>
             </select>
+            <?php if(empty($civilite)){?>
+                <div class='error_msg'><?= $field_msg ?></div>
+            <?php }?>
+
+
+
         </div>
 
         <div class="form_field">
             <label for="nom">Votre nom:</label>
-            <input id="nom" type="text" name="nom">
+            <input id="nom" type="text" name="nom"><br>
+            <?php if(empty($nom)){?>
+                <div class='error_msg'><?= $field_msg ?></div>
+            <?php } ?>
         </div>
 
         <div class="form_field">
             <label for="prenom">Votre prénom:</label>
             <input id="prenom" type="text" name="prenom">
+            <?php if(empty($prenom)){?>
+                <div class='error_msg'><?= $field_msg ?></div>
+            <?php } ?>
         </div>
 
         <div class="form_field">
             <label for="email">Votre email:</label>
             <input id="email" type="email" placeholder="ex: jean@gmail.com" name="email">
+            <?php if(empty($email)){?>
+                <div class='error_msg'><?= $field_msg ?></div>
+            <?php } ?>
         </div>
 
         <div class="form_field">
@@ -55,6 +111,9 @@ $metaDescription = "Contactez-moi";
                     </div>
                 </div>
             </div>
+            <?php if(empty($objet)){?>
+                <div class='error_msg'><?= $field_msg ?></div>
+            <?php } ?>
         </div>
 
 
@@ -62,10 +121,13 @@ $metaDescription = "Contactez-moi";
         <div id="message" class="form_field">
             <label for="message">Votre message:</label>
             <textarea form="form_container" name="message"></textarea>
+            <?php if(empty($message)){?>
+                <div class='error_msg'><?= $field_msg ?></div>
+            <?php } ?>
         </div>
 
         <div class="btn_container">
-            <input value="Envoyer" type="submit">
+            <input name="form_submit" value="Envoyer" type="submit">
         </div>
     </form>
 
@@ -85,20 +147,6 @@ int $flags = 0,
 ?resource $context = null
 ): int|false;
 */
-
-$date=date("Y-m-d H:i:s");
-
-$civilite=filter_input(INPUT_POST, 'civilite', FILTER_DEFAULT);
-$nom=filter_input(INPUT_POST, 'nom', FILTER_DEFAULT);
-$prenom=filter_input(INPUT_POST, 'prenom', FILTER_DEFAULT);
-$email=filter_input(INPUT_POST, 'email', FILTER_DEFAULT);
-$objet=filter_input(INPUT_POST, 'objet', FILTER_DEFAULT);
-$message=filter_input(INPUT_POST, 'message', FILTER_DEFAULT);
-
-file_put_contents(
-"contact_posts/contact_$date.txt",
-$civilite.$nom.$prenom.$email.$objet.$message
-);
 
 
 ?>
