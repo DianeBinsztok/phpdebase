@@ -9,12 +9,17 @@ $date=date("Y-m-d H:i:s");
 
 // 1 - Messages d'en-tête:
 $head_msg="";
-
 // 2 - Message sous chaque champs:
 $field_msg="";
+// 3 - Messages différenciés (formats de saisie invalides)
+$invalid_civilite_msg="/!\ Ce champs ne peut contenir que les valeurs: 'Madame', 'Monsieur' ou 'Autre' ";
+$invalid_string_msg="/!\ Veuillez corriger votre saisie: certains caractères spéciaux ne sont pas autorisés";
+$invalid_email_msg="/!\ Veuillez saisir un format d'email valide. Ex: nom@boitemail.com";
+$invalid_objet_msg="/!\ Votre choix ne peut contenir que les valeurs: 'job', 'info' ou 'autre' ";
 
 // Variable qui vérifie l'envoi du formulaire:
 $submit=filter_input(INPUT_POST, 'form_submit', FILTER_DEFAULT);
+
 
 // Champs à remplir
 $civilite=filter_input(INPUT_POST, 'civilite', FILTER_DEFAULT);
@@ -24,20 +29,57 @@ $email=filter_input(INPUT_POST, 'email', FILTER_DEFAULT);
 $objet=filter_input(INPUT_POST, 'objet', FILTER_DEFAULT);
 $message=filter_input(INPUT_POST, 'message', FILTER_DEFAULT);
 
-$valid_email=filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+// Vérification des formats en fonction du type d'input:
+function validate_civilite($option): bool{
+    if(($option=="Madame")||($option=="Monsieur")||($option=="Autre")){
+        return true;
+    }else{
+        return false;
+    }
+}
+function validate_string($string):bool{
+    $invalid_string=(str_contains($string, "<"))||(str_contains($string, ">")||(str_contains($string, "%"))||(str_contains($string, ".")));
+    if(!$invalid_string){
+        return true;
+    }else{
+        return false;
+    }
+}
+function validate_email($var): bool {
+    $var=filter_input(INPUT_POST, '$var', FILTER_VALIDATE_EMAIL);
+    if(!empty($var)){
+        return true;
+    }else{
+        return false;
+    }
+}
+function validate_objet($radiobtn):bool{
+    if(($radiobtn=="job")||($radiobtn=="info")||($radiobtn=="autre")){
+        return true;
+    }else{
+        return false;
+    }
+}
+// Liste des formats valides:
+$valid_civilite=validate_civilite($civilite);
+$valid_nom=validate_string($nom);
+$valid_prenom=validate_string($prenom);
+$valid_email=validate_email($email);
+$valid_objet=validate_objet($objet);
+$valid_message=validate_string($message);
+
 
 if($submit!==null){
     if(isset($civilite,$nom,$prenom,$email,$objet,$message)){
         if(!empty($civilite)&&!empty($nom)&&!empty($prenom)&&!empty($email)&&!empty($objet)&&!empty($message)){
-            if($valid_email){
+            if($valid_civilite && $valid_nom && $valid_prenom && $valid_email && $valid_objet && $valid_message){
                 file_put_contents(
                     "contact_posts/contact_$date.txt",
                      $civilite.$nom.$prenom.$email.$objet.$message
                   );
                 $head_msg="Merci pour votre prise de contact. Vous recevrez une réponse par email dans les plus brefs délais.";
             }else{
-                $email=false;
-                $field_msg="Veuillez entrer un format valide d'email. Ex: nom@boite.com";
+                $field_msg="Veuillez entrer un format de saisie valide";
             }
 
         }else{
@@ -59,7 +101,7 @@ if($submit!==null){
         <div class='error_msg'><?= $head_msg ?></div>
         <div class="form_field">
             <label for="civilite">Choisissez votre civilité:</label>
-            <select id="civilite" type="select" name="civilite">
+            <select value="<?= $civilite ?>" id="civilite" type="select" name="civilite">
                 <option value="">Civilité</option>
                 <option value="Madame">Madame</option>
                 <option value="Monsieur">Monsieur</option>
@@ -67,6 +109,8 @@ if($submit!==null){
             </select>
             <?php if(empty($civilite)){?>
                 <div class='error_msg'><?= $field_msg ?></div>
+            <?php }elseif(!$valid_civilite){?>
+                <div class='error_msg'><?= $invalid_civilite_msg ?></div>
             <?php }?>
 
 
@@ -78,7 +122,9 @@ if($submit!==null){
             <input value="<?= $nom ?>" id="nom" type="text" name="nom"><br>
             <?php if(empty($nom)){?>
                 <div class='error_msg'><?= $field_msg ?></div>
-            <?php } ?>
+            <?php }elseif(!$valid_nom){?>
+                <div class='error_msg'><?= $invalid_string_msg ?></div>
+            <?php }?>
         </div>
 
         <div class="form_field">
@@ -86,7 +132,9 @@ if($submit!==null){
             <input value="<?= $prenom ?>" id="prenom" type="text" name="prenom">
             <?php if(empty($prenom)){?>
                 <div class='error_msg'><?= $field_msg ?></div>
-            <?php } ?>
+            <?php }elseif(!$valid_prenom){?>
+                <div class='error_msg'><?= $invalid_string_msg ?></div>
+            <?php }?>
         </div>
 
         <div class="form_field">
@@ -94,7 +142,9 @@ if($submit!==null){
             <input value="<?= $email ?>" id="email" type="email" placeholder="ex: jean@gmail.com" name="email">
             <?php if(empty($email)){?>
                 <div class='error_msg'><?= $field_msg ?></div>
-            <?php } ?>
+            <?php }elseif(!$valid_email){?>
+                <div class='error_msg'><?= $invalid_email_msg ?></div>
+            <?php }?>
         </div>
 
         <div class="form_field">
@@ -117,7 +167,9 @@ if($submit!==null){
             </div>
             <?php if(empty($objet)){?>
                 <div class='error_msg'><?= $field_msg ?></div>
-            <?php } ?>
+            <?php }elseif(!$valid_objet){?>
+                <div class='error_msg'><?= $invalid_objet_msg ?></div>
+            <?php }?>
         </div>
 
 
@@ -127,7 +179,9 @@ if($submit!==null){
             <textarea   form="form_container" name="message"><?= $message ?></textarea>
             <?php if(empty($message)){?>
                 <div class='error_msg'><?= $field_msg ?></div>
-            <?php } ?>
+            <?php }elseif(!$valid_message){?>
+                <div class='error_msg'><?= $invalid_string_msg ?></div>
+            <?php }?>
         </div>
 
         <div class="btn_container">
