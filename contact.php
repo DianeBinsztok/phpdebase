@@ -3,19 +3,9 @@
 
 $metaTitle="Diane Binsztok - Contact";
 $metaDescription = "Contactez-moi";
-$date=date("Y-m-d H:i:s");
+$_SESSION['countViewPage']++;
 
-// Messages:
 
-// 1 - Messages d'en-tête:
-$head_msg="";
-// 2 - Message sous chaque champs:
-$field_msg="";
-// 3 - Messages différenciés (formats de saisie invalides)
-$invalid_civilite_msg="/!\ Ce champs ne peut contenir que les valeurs: 'Madame', 'Monsieur' ou 'Autre' ";
-$invalid_string_msg="/!\ Veuillez corriger votre saisie: certains caractères spéciaux ne sont pas autorisés";
-$invalid_email_msg="/!\ Veuillez saisir un format d'email valide. Ex: nom@boitemail.com";
-$invalid_objet_msg="/!\ Votre choix ne peut contenir que les valeurs: 'job', 'info' ou 'autre' ";
 
 // Variable qui vérifie l'envoi du formulaire:
 $submit=filter_input(INPUT_POST, 'form_submit', FILTER_DEFAULT);
@@ -68,7 +58,18 @@ $valid_email=validate_email($email);
 $valid_objet=validate_objet($objet);
 $valid_message=validate_string($message);
 
+// Messages:
+// 1 - Messages d'en-tête:
+$head_msg="";
+// 2 - Message sous chaque champs:
+$field_msg="";
+// 3 - Messages différenciés (formats de saisie invalides)
+$invalid_civilite_msg="/!\ Ce champs ne peut contenir que les valeurs: 'Madame', 'Monsieur' ou 'Autre' ";
+$invalid_string_msg="/!\ Veuillez corriger votre saisie: certains caractères spéciaux ne sont pas autorisés";
+$invalid_email_msg="/!\ Veuillez saisir un format d'email valide. Ex: nom@boitemail.com";
+$invalid_objet_msg="/!\ Votre choix ne peut contenir que les valeurs: 'job', 'info' ou 'autre' ";
 
+// On procède enfin aux vérifications:
 if($submit!==null){
     if(isset($civilite,$nom,$prenom,$email,$objet,$message)){
         if(!empty($civilite)&&!empty($nom)&&!empty($prenom)&&!empty($email)&&!empty($objet)&&!empty($message)){

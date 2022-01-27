@@ -2,10 +2,13 @@
 session_start();
 
 $date=date('Y-m-d H:i:s');
+$visitedPages=0;
 if(!isset($_SESSION['dateFirstVisit'])){
     $_SESSION['dateFirstVisit']=$date;
 }
-
+if(!isset($_SESSION['countViewPage'])){
+    $_SESSION['countViewPage']=$visitedPages;
+}
 
 
 $metaTitle="Diane Binsztok - Mon CV";

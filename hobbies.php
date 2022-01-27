@@ -6,7 +6,7 @@
 
 $metaTitle= "Diane Binsztok - Mes hobbies";
 $metaDescription = "Voici une description succinte de mes hobbies";
-
+$_SESSION['countViewPage']++;
 ?>
 <!--Corps de page-->
 <main>

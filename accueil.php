@@ -1,6 +1,7 @@
 <?php
 $metaTitle="Diane Binsztok - Mon CV";
 $metaDescription = "Bienvenue sur la page d'accueil de mon CV";
+$_SESSION['countViewPage']++;
 ?>
 
 
