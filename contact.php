@@ -37,7 +37,7 @@ function validate_string($string):bool{
 }
 function validate_email($var): bool {
     $var=filter_input(INPUT_POST, '$var', FILTER_VALIDATE_EMAIL);
-    if(!empty($var)){
+    if(($var)!==false){
         return true;
     }else{
         return false;
@@ -64,16 +64,25 @@ $head_msg="";
 // 2 - Message sous chaque champs:
 $field_msg="";
 // 3 - Messages différenciés (formats de saisie invalides)
-$invalid_civilite_msg="/!\ Ce champs ne peut contenir que les valeurs: 'Madame', 'Monsieur' ou 'Autre' ";
-$invalid_string_msg="/!\ Veuillez corriger votre saisie: certains caractères spéciaux ne sont pas autorisés";
-$invalid_email_msg="/!\ Veuillez saisir un format d'email valide. Ex: nom@boitemail.com";
-$invalid_objet_msg="/!\ Votre choix ne peut contenir que les valeurs: 'job', 'info' ou 'autre' ";
+$formErrors=[
+
+    'civilite'=> "Ce champs ne peut contenir que les valeurs: 'Madame', 'Monsieur' ou 'Autre'",
+    'nom'=> "Veuillez corriger votre saisie: certains caractères spéciaux ne sont pas autorisés",
+    'prenom'=>"Veuillez corriger votre saisie: certains caractères spéciaux ne sont pas autorisés",
+    'email'=>"Veuillez saisir un format d'email valide. Ex: nom@boitemail.com",
+    'objet'=>"Votre choix ne peut contenir que les valeurs: 'job', 'info' ou 'autre'",
+    'message'=>"Veuillez corriger votre saisie: certains caractères spéciaux ne sont pas autorisés",
+    'missingKey'=>"Tous les champs sont nécessaires pour l'envoi du formulaire.",
+    'missingValue'=>"Ce champs est obligatoire pour l'envoi du formulaire",
+    'succes'=>"Merci pour votre prise de contact. Vous recevrez une réponse par email dans les plus brefs délais."
+];
 
 // On procède enfin aux vérifications:
 if($submit!==null){
     if(isset($civilite,$nom,$prenom,$email,$objet,$message)){
         if(!empty($civilite)&&!empty($nom)&&!empty($prenom)&&!empty($email)&&!empty($objet)&&!empty($message)){
             if($valid_civilite && $valid_nom && $valid_prenom && $valid_email && $valid_objet && $valid_message){
+                $date=date("Y-m-d H:i:s");
                 file_put_contents(
                     "contact_posts/contact_$date.txt",
                      $civilite.$nom.$prenom.$email.$objet.$message
@@ -84,11 +93,11 @@ if($submit!==null){
             }
 
         }else{
-            $field_msg="/!\ Ce champs est obligatoire pour l'envoi du formulaire";
+            $field_msg=$formErrors['missingValue'];
         }
     }else{
-        $head_msg="/!\ Tous les champs sont nécessaires pour l'envoi du formulaire.";
-        $field_msg="/!\ Ce champs est obligatoire pour l'envoi du formulaire";
+        $head_msg=$formErrors['missingKey'];
+        $field_msg=$field_msg=$formErrors['missingValue'];
     }
 }
 
@@ -111,7 +120,7 @@ if($submit!==null){
             <?php if(empty($civilite)){?>
                 <div class='error_msg'><?= $field_msg ?></div>
             <?php }elseif(!$valid_civilite){?>
-                <div class='error_msg'><?= $invalid_civilite_msg ?></div>
+                <div class='error_msg'><?= $formErrors['civilite']?></div>
             <?php }?>
 
 
@@ -124,7 +133,7 @@ if($submit!==null){
             <?php if(empty($nom)){?>
                 <div class='error_msg'><?= $field_msg ?></div>
             <?php }elseif(!$valid_nom){?>
-                <div class='error_msg'><?= $invalid_string_msg ?></div>
+                <div class='error_msg'><?= $formErrors['nom']?></div>
             <?php }?>
         </div>
 
@@ -134,7 +143,7 @@ if($submit!==null){
             <?php if(empty($prenom)){?>
                 <div class='error_msg'><?= $field_msg ?></div>
             <?php }elseif(!$valid_prenom){?>
-                <div class='error_msg'><?= $invalid_string_msg ?></div>
+                <div class='error_msg'><?= $formErrors['prenom']?></div>
             <?php }?>
         </div>
 
@@ -144,7 +153,7 @@ if($submit!==null){
             <?php if(empty($email)){?>
                 <div class='error_msg'><?= $field_msg ?></div>
             <?php }elseif(!$valid_email){?>
-                <div class='error_msg'><?= $invalid_email_msg ?></div>
+                <div class='error_msg'><?= $formErrors['email']?></div>
             <?php }?>
         </div>
 
@@ -169,7 +178,7 @@ if($submit!==null){
             <?php if(empty($objet)){?>
                 <div class='error_msg'><?= $field_msg ?></div>
             <?php }elseif(!$valid_objet){?>
-                <div class='error_msg'><?= $invalid_objet_msg ?></div>
+                <div class='error_msg'><?= $formErrors['objet']?></div>
             <?php }?>
         </div>
 
@@ -181,7 +190,7 @@ if($submit!==null){
             <?php if(empty($message)){?>
                 <div class='error_msg'><?= $field_msg ?></div>
             <?php }elseif(!$valid_message){?>
-                <div class='error_msg'><?= $invalid_string_msg ?></div>
+                <div class='error_msg'><?= $formErrors['message']?></div>
             <?php }?>
         </div>
 
