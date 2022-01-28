@@ -1,8 +1,6 @@
 <!--les infos d'en-tête-->
 <?php
-
-$metaTitle="Diane Binsztok - Contact";
-$metaDescription = "Contactez-moi";
+//infos de session: décompte des pages visitées
 $_SESSION['countViewPage']++;
 
 

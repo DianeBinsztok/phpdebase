@@ -3,9 +3,7 @@
 
 <!--les infos de tête-->
 <?php
-
-$metaTitle= "Diane Binsztok - Mes hobbies";
-$metaDescription = "Voici une description succinte de mes hobbies";
+// infos de session : décompte des pages visitées
 $_SESSION['countViewPage']++;
 ?>
 <!--Corps de page-->
